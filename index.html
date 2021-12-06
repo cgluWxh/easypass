@@ -36,14 +36,14 @@
        <span class="code16" type="text" id="code16" name="code16d">此处为最终结果</span>
        <br />
        <br />
-       &copy; 2021 Zhenbang.<br />
+       &copy; 2021 cgluWxh.<br />
       </div>
      </div>
     </div>
     <div class="mdl-card__actions mdl-card--border">
-     <button id="pbt" onclick="if($('#password').val()){store.set('pass',$.md5($('#password').val(),'blue')),history.go(0);}else{toastr.error('请输入记忆密码！');}" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">保存密码</button>
+     <button id="pbt" onclick="if($('#password').val()){store.set('pass',$.md5($('#password').val(),'blue')),location.reload();}else{toastr.error('请输入记忆密码！');}" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">保存密码</button>
 	 <button id="login" onclick="edithistory();" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">管理历史记录</button>
-	 <button id="qcmm" style="display:none;" onclick="store.set('pass','');history.go(0);" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">清除保存密码</button>
+	 <button id="qcmm" style="display:none;" onclick="store.set('pass','');location.reload();" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">清除保存密码</button>
     </div>
    </div>
   </div>
