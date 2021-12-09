@@ -50,7 +50,7 @@
     </div>
    </div>
   </div>
-  <script>//"serviceWorker"in navigator&&navigator.serviceWorker.register("sw.js",{scope:"."}).then(function(e){console.log("ServiceWorker registration successful with scope: ",e.scope)},function(e){console.log("ServiceWorker registration failed: ",e)});
+  <script>"serviceWorker"in navigator&&navigator.serviceWorker.register("sw.js",{scope:"."}).then(function(e){console.log("ServiceWorker registration successful with scope: ",e.scope)},function(e){console.log("ServiceWorker registration failed: ",e)});
   if(store.get("pass"))$('#key').autocomplete({source: store.get('pswHist'),appendTo:'#result'});
   else $('#key').autocomplete({source: window.tmphis,appendTo:'#result'}),store.set("user",""),store.set("objid","");
   </script>
@@ -163,7 +163,7 @@
               // 将对象保存到云端
               data.save().then((res) => {
                 // 成功保存之后，执行其他逻辑
-                store.set("objid", tmp.id);
+                store.set("objid", res.id);
                 toastr.success("已为您成功创建账号！");
               }, (error) => {
                 // 异常处理

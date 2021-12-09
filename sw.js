@@ -1,4 +1,4 @@
-var cacheStorageKey = 'ep-1.1'
+var cacheStorageKey = 'ep-1.5'
 var cacheList=[
   "/",
   'index.html',
@@ -21,11 +21,21 @@ self.addEventListener('install',e =>{
   e.waitUntil(addcache());
 })
 self.addEventListener('fetch',function(e){
+  if (e.request.method !== 'GET') {
+    return;
+  }
+  var origin = self.location.origin;
+  var key = e.request.url.substring(origin.length + 1);
+  //console.log(origin,key);
+  if(!e.request.url.startsWith(origin))return;
+  e.respondWith(
     caches.match(e.request).then(function(response){
       if(response != null){
-        e.respondWith(response);
+        return response;
       }
+      return fetch(e.request.url);
     })
+  );
 })
 self.addEventListener('activate',function(e){
   e.waitUntil(
