@@ -34,10 +34,10 @@
       </div>
 	  <div id="result" class="mdl-textfield" style="display:none;"></div>
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="text-align: center;">
-       <span class="code16" type="text" id="code16" name="code16d">此处为最终结果</span>
+       <span class="code16" type="text" id="code16" name="code16d" onclick="window.nowcode&&(countCode(),alert(window.nowcode))">待生成</span>
        <br />
        <br />
-       v1.7 &copy; 2021 cgluWxh.<br />
+       v1.8 &copy; 2021 cgluWxh.<br />
       </div>
      </div>
     </div>
@@ -50,7 +50,7 @@
     </div>
    </div>
   </div>
-  <script>//"serviceWorker"in navigator&&navigator.serviceWorker.register("sw.js",{scope:"."}).then(function(e){console.log("ServiceWorker registration successful with scope: ",e.scope)},function(e){console.log("ServiceWorker registration failed: ",e)});</script>
+  <script>"serviceWorker"in navigator&&navigator.serviceWorker.register("sw.js",{scope:"."}).then(function(e){console.log("ServiceWorker registration successful with scope: ",e.scope)},function(e){console.log("ServiceWorker registration failed: ",e)});</script>
   <script>
     $(document).ready(function() {
       AV.init({
