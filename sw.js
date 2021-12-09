@@ -5,6 +5,10 @@ var cacheList=[
   'bg.jpg',
   "logo.png",
   "manifest.json",
+  "depend1.js",
+  "style.css",
+  "av-min.js",
+  "favicon.ico",
 ];
 function addcache()
 {
@@ -17,14 +21,11 @@ self.addEventListener('install',e =>{
   e.waitUntil(addcache());
 })
 self.addEventListener('fetch',function(e){
-  e.respondWith(
     caches.match(e.request).then(function(response){
       if(response != null){
-        return response
+        e.respondWith(response);
       }
-      return fetch(e.request.url)
     })
-  )
 })
 self.addEventListener('activate',function(e){
   e.waitUntil(
