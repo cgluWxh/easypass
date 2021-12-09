@@ -37,7 +37,7 @@
        <span class="code16" type="text" id="code16" name="code16d">此处为最终结果</span>
        <br />
        <br />
-       &copy; 2021 cgluWxh.<br />
+       v1.6 &copy; 2021 cgluWxh.<br />
       </div>
      </div>
     </div>
@@ -69,7 +69,7 @@
           user=prompt("请输入用户名");
           store.set("user", user);
         }
-        var pass=store.get("pass")||$("#password").val();
+        var pass=store.get("pass")||($("#password").val()?$.md5($("#password").val(),"blue"):null);
         if(!pass)return false;
         else return $.md5(pass,user);
     }
