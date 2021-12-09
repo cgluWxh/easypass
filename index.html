@@ -37,7 +37,7 @@
        <span class="code16" type="text" id="code16" name="code16d">此处为最终结果</span>
        <br />
        <br />
-       v1.6 &copy; 2021 cgluWxh.<br />
+       v1.7 &copy; 2021 cgluWxh.<br />
       </div>
      </div>
     </div>
@@ -50,10 +50,7 @@
     </div>
    </div>
   </div>
-  <script>"serviceWorker"in navigator&&navigator.serviceWorker.register("sw.js",{scope:"."}).then(function(e){console.log("ServiceWorker registration successful with scope: ",e.scope)},function(e){console.log("ServiceWorker registration failed: ",e)});
-  if(store.get("pass"))$('#key').autocomplete({source: store.get('pswHist'),appendTo:'#result'});
-  else $('#key').autocomplete({source: window.tmphis,appendTo:'#result'}),store.set("user",""),store.set("objid","");
-  </script>
+  <script>//"serviceWorker"in navigator&&navigator.serviceWorker.register("sw.js",{scope:"."}).then(function(e){console.log("ServiceWorker registration successful with scope: ",e.scope)},function(e){console.log("ServiceWorker registration failed: ",e)});</script>
   <script>
     $(document).ready(function() {
       AV.init({
@@ -61,11 +58,12 @@
         appKey: "Ku3MqwzRpkkcCrWEjjH6xcR9",
         serverURL: "https://ewpnggys.lc-cn-n1-shared.com"
       });
- 
+      if(store.get("pass"))$('#key').autocomplete({source: store.get('pswHist'),appendTo:'#result'});
+      else $('#key').autocomplete({source: window.tmphis,appendTo:'#result'}),store.set("user",""),store.set("objid",""),AV.User.logOut();
     })
     function getCloudKey(){
         var user=store.get("user");
-        if(!user) {
+        while(!user) {
           user=prompt("请输入用户名");
           store.set("user", user);
         }
@@ -73,12 +71,32 @@
         if(!pass)return false;
         else return $.md5(pass,user);
     }
+    function doLogin(callback){
+      const key=getCloudKey();
+      AV.User.logIn(key,key).then((res)=>{
+        callback();
+      },
+      (err)=>{
+        const user = new AV.User();
+        user.setUsername(key);
+        user.setPassword(key);
+
+        user.signUp().then((user) => {
+          callback();
+        }, (error) => {
+        });
+      })
+    }
     function cloudUp() {
       var key=getCloudKey();
       var objid=store.get("objid");
       var source=(window.mode=="per"?store.get("pswHist"):window.tmphis);
       if(!key){
         toastr.error("未输入密码！");
+        return;
+      }
+      if(!AV.User.current()){
+        doLogin(cloudUp);
         return;
       }
       if(objid) {
@@ -123,6 +141,10 @@
         toastr.error("未输入密码！");
         return;
       }
+      if(!AV.User.current()){
+        doLogin(cloudDown);
+        return;
+      }
       var objid=store.get("objid");
       if(objid) {
         const query = new AV.Query('data');
@@ -134,7 +156,7 @@
             window.tmphis=tmp.get("hist");
             $("#key").autocomplete({source:window.tmphis,appendTo:"#result"}); 
           }
-          toastr.success("操作成功");
+          toastr.success("下载成功！");
         });
       } else {
         const query = new AV.Query('data');
@@ -150,7 +172,7 @@
               window.tmphis=tmp.get("hist");
               $("#key").autocomplete({source:window.tmphis,appendTo:"#result"}); 
             }
-            toastr.success("操作成功");
+            toastr.success("下载成功！");
           } else {
             // 声明 class
               const Data = AV.Object.extend("data");

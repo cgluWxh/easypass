@@ -1,4 +1,4 @@
-var cacheStorageKey = 'ep-1.6'
+var cacheStorageKey = 'ep-1.7'
 var cacheList=[
   "/",
   'index.html',
